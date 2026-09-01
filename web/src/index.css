@@ -1,0 +1,85 @@
+@import 'tailwindcss';
+@import 'leaflet/dist/leaflet.css';
+
+/**
+ * A deliberately dark, single-look operations console. Every colour is stated
+ * explicitly - nothing inherits from the host theme.
+ */
+:root {
+  color-scheme: dark;
+
+  --plane:          #0f131a;  /* page plane */
+  --surface-1:      #1a1f28;  /* card / chart surface */
+  --surface-2:      #222834;  /* raised surface */
+  --surface-3:      #2b323f;  /* input / hover */
+
+  --text-primary:   #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted:     #8a93a3;
+
+  --grid:           #252c38;
+  --baseline:       #333c4a;
+  --border:         rgba(255, 255, 255, 0.10);
+  --border-strong:  rgba(255, 255, 255, 0.18);
+
+  --accent:         #3987e5;
+
+  --status-good:     #0ca30c;
+  --status-warning:  #fab219;
+  --status-serious:  #ec835a;
+  --status-critical: #d03b3b;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--plane);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Leaflet needs to sit on our own plane rather than its default light grey. */
+.leaflet-container {
+  background: #0b0e14;
+  font-family: inherit;
+}
+.leaflet-control-attribution {
+  background: rgba(15, 19, 26, 0.85) !important;
+  color: var(--text-muted) !important;
+  font-size: 10px !important;
+}
+.leaflet-control-attribution a { color: var(--text-secondary) !important; }
+.leaflet-bar a {
+  background: var(--surface-2) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border) !important;
+}
+.leaflet-bar a:hover { background: var(--surface-3) !important; }
+
+/* OSM raster tiles are a light basemap; damp them down to the console palette.
+   If tiles fail to load (offline), the corridors still render on the plane. */
+.leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.82) contrast(0.92) saturate(0.55); }
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: var(--surface-2);
+  color: var(--text-primary);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+}
+.leaflet-popup-content { margin: 10px 12px; font-size: 12px; line-height: 1.5; }
+.leaflet-popup-close-button { color: var(--text-muted) !important; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--plane); }
+::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #3a4353; }
+
+input[type='range'] { accent-color: var(--accent); }
+
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.pulse { animation: pulse-dot 2s ease-in-out infinite; }

@@ -1,0 +1,18 @@
+{
+  "name": "codecrew-ner-logistics",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-Based Smart Logistics and Accessibility Intelligence Platform for the North Eastern Region (SIH26002)",
+  "workspaces": ["server", "web"],
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev --workspace server",
+    "dev:web": "npm run dev --workspace web",
+    "build": "npm run build --workspace web",
+    "start": "npm run start --workspace server",
+    "smoke": "node server/scripts/smoke.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
